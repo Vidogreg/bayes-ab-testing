@@ -44,8 +44,9 @@ shinyServer(function(input, output) {
         c(1.2*a - 0.2*b, 1.2*b - 0.2*a)
       }
       printPlot <- isolate({TRUE})
-      # message <- isolate({'Done'})
     } else {
+      sample_A <- isolate({0})
+      sample_B <- isolate({0})
       conv_A <- isolate({NaN})
       conv_B <- isolate({NaN})
       alpha_A <- isolate({1})
@@ -58,7 +59,6 @@ shinyServer(function(input, output) {
       x_lim <- isolate({c(NaN, NaN)})
       x_lim_diff <- isolate({c(NaN, NaN)})
       printPlot <- isolate({FALSE})
-      # message <- isolate({'Check inputs!'})
     }
     output$prob <- renderText({
       sprintf(
@@ -113,9 +113,6 @@ shinyServer(function(input, output) {
         printPlot = printPlot
       )
     })
-    # output$message <- renderText({
-    #   message
-    # })
   })
 
 })
