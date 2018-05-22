@@ -66,15 +66,17 @@ shinyUI(
             href = 'http://confluence.pixelfederation.com/pages/viewpage.action?pageId=4607085',
             'Click here to read how to use this calculator'
           ),
+          tags$br(),
+          tags$a(
+            href = 'https://github.com/Vidogreg/bayes-ab-testing/tree/master/bayes-arpu-test',
+            'Get the code here'
+          ),
           tags$p('support: vgregor@pixelfederation.com')
         )
       ),
       mainPanel(
         tableOutput('table1'),
         tableOutput('table2'),
-        # htmlOutput('prob'),
-        # htmlOutput('exp_loss_A'),
-        # htmlOutput('exp_loss_B'),
         hr(),
         plotlyOutput('posterior_plot_B_minus_A', width = '580px', height = '250px'),
         hr(),

@@ -23,7 +23,7 @@ shinyServer(function(input, output) {
       input$success_B <= input$total_B &&
       input$rev_A >= 0 &&
       input$rev_B >= 0 &&
-      input$sim_sample >= 1
+      input$sim_sample >= 2
     ) {
       sample_A <- isolate({input$total_A})
       sample_B <- isolate({input$total_B})
@@ -67,8 +67,9 @@ shinyServer(function(input, output) {
         c(1.2*a - 0.2*b, 1.2*b - 0.2*a)
       }
       printPlot <- isolate({TRUE})
-      # message <- isolate({'Done'})
     } else {
+      sample_A <- isolate({0})
+      sample_B <- isolate({0})
       conv_A <- isolate({NaN})
       conv_B <- isolate({NaN})
       arppu_A <- isolate({NaN})
@@ -88,28 +89,15 @@ shinyServer(function(input, output) {
       hdi_diff <- isolate({c(NaN, NaN)})
       x_lim <- isolate({c(NaN, NaN)})
       x_lim_diff <- isolate({c(NaN, NaN)})
-      res <- isolate({list(probBbeatsA = NaN, expLossA = NaN, expLossB = NaN)})
+      res <- isolate({
+        list(
+          convProbBbeatsA = NaN, convExpLossA = NaN, convExpLossB = NaN,
+          revProbBbeatsA = NaN, revExpLossA = NaN, revExpLossB = NaN,
+          arpuProbBbeatsA = NaN, arpuExpLossA = NaN, arpuExpLossB = NaN
+        )
+      })
       printPlot <- isolate({FALSE})
-      # message <- isolate({'Check inputs!'})
     }
-    # output$prob <- renderText({
-    #   sprintf(
-    #     'Probability that B is better than A: <b>\n%.1f%%</b>.',
-    #     res$arpuProbBbeatsA*100
-    #   )
-    # })
-    # output$exp_loss_A <- renderText({
-    #   sprintf(
-    #     'Expected uplift in ARPU if B is actually better: <b>\n%.2g €</b>.',
-    #     res$arpuExpLossA
-    #   )
-    # })
-    # output$exp_loss_B <- renderText({
-    #   sprintf(
-    #     'Expected loss in ARPU if B is actually worse: <b>\n%.2g €</b>.',
-    #     res$arpuExpLossB
-    #   )
-    # })
     output$table1 <- renderTable({
       tab <- data.frame(
         metric = c('sample size', 'conversion', 'ARPPU', 'ARPU', '95% HDI'),
