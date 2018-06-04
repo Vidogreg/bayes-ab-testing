@@ -41,10 +41,10 @@ shinyUI(
         hr(),
         tags$div(
           class='header', checked = NA,
-          tags$a(
-            href = 'http://confluence.pixelfederation.com/pages/viewpage.action?pageId=4607020',
-            'Click here to read how to use this calculator'
-          ),
+          # tags$a(
+          #   href = 'http://confluence.pixelfederation.com/pages/viewpage.action?pageId=4607020',
+          #   'Click here to read how to use this calculator'
+          # ),
           tags$br(),
           tags$a(
             href = 'https://github.com/Vidogreg/bayes-ab-testing/tree/master/bayes-conversion-test',
