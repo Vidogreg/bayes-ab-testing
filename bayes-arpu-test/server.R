@@ -100,7 +100,10 @@ shinyServer(function(input, output) {
     }
     output$table1 <- renderTable({
       tab <- data.frame(
-        metric = c('sample size', 'conversion', 'ARPPU', 'ARPU', '95% HDI'),
+        metric = c(
+          'sample size', 'conversion', 'ARPPU',
+          '<strong>ARPU<strong>', '<strong>95% HDI<strong>'
+        ),
         A = c(
           sprintf('\n%.d', sample_A),
           sprintf('\n%.3g%%', conv_A*100),
@@ -125,7 +128,7 @@ shinyServer(function(input, output) {
       )
       colnames(tab) <- c(' ', 'A', 'B', 'B - A')
       tab
-    }, spacing = 'xs')
+    }, spacing = 'xs', sanitize.text.function = function(x){x})
     output$table2 <- renderTable({
       tab <- data.frame(
         column1 = c(
