@@ -1,3 +1,4 @@
+# Bayesian AB test for ARPU
 # Calculates the probability that B is better than A and expected loss for A and B
 # Also returns samples used for calculations
 {
@@ -148,7 +149,7 @@ plot_sample_density <- function(
       showlegend = FALSE
     ) %>% layout(
       title = 'Approximate distribution of difference of ARPU B - A',
-      titlefont = list(size = 14),
+      title = list(font = 14),
       xaxis = list(showgrid = FALSE, fixedrange = TRUE),
       yaxis = list(showline = FALSE, showticklabels = FALSE, showgrid = FALSE, fixedrange = TRUE),
       legend = list(x = 0.9, y = 0.9)
@@ -163,7 +164,7 @@ plot_sample_density <- function(
 plot_sample_densities <- function(
   sampleDataA, hdiA = c(-0.1, 0.1),
   sampleDataB, hdiB = c(-0.1, 0.1),
-  printPlot = TRUE, ...
+  nameA, nameB, printPlot = TRUE, ...
 ) {
   if(printPlot) {
     densA <- density(sampleDataA, bw = 'nrd')
@@ -183,7 +184,7 @@ plot_sample_densities <- function(
       y = yA,
       type = 'scatter',
       mode = 'lines',
-      name = 'sample A',
+      name = nameA,
       line = list(color = '#5BC0DE'),
       hoverinfo = 'none'
     ) %>% add_trace(
@@ -201,7 +202,7 @@ plot_sample_densities <- function(
       y = yB,
       type = 'scatter',
       mode = 'lines',
-      name = 'sample B',
+      name = nameB,
       line = list(color = '#5CB85C'),
       hoverinfo = 'none'
     ) %>% add_trace(
@@ -216,7 +217,7 @@ plot_sample_densities <- function(
       showlegend = FALSE
     ) %>% layout(
       title = 'Distribution of ARPU A and B',
-      titlefont = list(size = 14),
+      title = list(font = 14),
       xaxis = list(showgrid = FALSE, fixedrange = TRUE),
       yaxis = list(showline = FALSE, showticklabels = FALSE, showgrid = FALSE, fixedrange = TRUE),
       legend = list(x = 0.9, y = 0.9)

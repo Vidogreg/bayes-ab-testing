@@ -1,3 +1,5 @@
+# bayes-arpu-test
+
 library(shiny)
 library(plotly)
 source('utilities.R')
@@ -66,6 +68,8 @@ shinyServer(function(input, output) {
         b <- hdi_diff[2]
         c(1.2*a - 0.2*b, 1.2*b - 0.2*a)
       }
+      name_A <- isolate({input$name_A})
+      name_B <- isolate({input$name_B})
       printPlot <- isolate({TRUE})
     } else {
       sample_A <- isolate({0})
@@ -96,6 +100,8 @@ shinyServer(function(input, output) {
           arpuProbBbeatsA = NaN, arpuExpLossA = NaN, arpuExpLossB = NaN
         )
       })
+      name_A <- isolate({''})
+      name_B <- isolate({''})
       printPlot <- isolate({FALSE})
     }
     output$table1 <- renderTable({
@@ -126,7 +132,12 @@ shinyServer(function(input, output) {
           sprintf('[ %.3g €, \n%.3g € ]', hdi_diff[1], hdi_diff[2])
         )
       )
-      colnames(tab) <- c(' ', 'A', 'B', 'B - A')
+      colnames(tab) <- c(
+        ' ',
+        paste('A -', name_A),
+        paste('B -', name_B),
+        'B - A'
+      )
       tab
     }, spacing = 'xs', sanitize.text.function = function(x){x})
     output$table2 <- renderTable({
@@ -168,6 +179,8 @@ shinyServer(function(input, output) {
         sampleDataB = post_sample_B,
         hdiA = hdi_A,
         hdiB = hdi_B,
+        paste('', name_A),
+        paste('', name_B),
         printPlot = printPlot
       )
     })
