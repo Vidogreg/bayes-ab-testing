@@ -1,3 +1,5 @@
+# bayes-conversion-test
+
 library(shiny)
 library(plotly)
 source('utilities.R')
@@ -43,6 +45,8 @@ shinyServer(function(input, output) {
         b <- hdi_diff[2]
         c(1.2*a - 0.2*b, 1.2*b - 0.2*a)
       }
+      name_A <- isolate({input$name_A})
+      name_B <- isolate({input$name_B})
       printPlot <- isolate({TRUE})
     } else {
       sample_A <- isolate({0})
@@ -58,6 +62,8 @@ shinyServer(function(input, output) {
       hdi_diff <- isolate({c(NaN, NaN)})
       x_lim <- isolate({c(NaN, NaN)})
       x_lim_diff <- isolate({c(NaN, NaN)})
+      name_A <- isolate({''})
+      name_B <- isolate({''})
       printPlot <- isolate({FALSE})
     }
     output$prob <- renderText({
@@ -97,13 +103,19 @@ shinyServer(function(input, output) {
           sprintf('[ %.3g%%, \n%.3g%% ]', hdi_diff[1]*100, hdi_diff[2]*100)
         )
       )
-      colnames(tab) <- c(' ', 'A', 'B', 'B - A')
+      colnames(tab) <- c(
+        ' ',
+        paste('A -', name_A),
+        paste('B -', name_B),
+        'B - A'
+      )
       tab
     })
     output$posterior_plot <- renderPlotly({
       plot_post_beta(
         alphaA = alpha_A, betaA = beta_A, alphaB = alpha_B, betaB = beta_B,
-        hdiA = hdi_A, hdiB = hdi_B, xlim = x_lim, printPlot = printPlot
+        hdiA = hdi_A, hdiB = hdi_B, xlim = x_lim,
+        paste('', name_A), paste('', name_B), printPlot = printPlot
       )
     })
     output$posterior_plot_B_minus_A <- renderPlotly({

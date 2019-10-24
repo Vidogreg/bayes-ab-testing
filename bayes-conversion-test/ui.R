@@ -1,3 +1,5 @@
+# bayes-conversion-test
+
 library(shiny)
 library(plotly)
 
@@ -34,6 +36,16 @@ shinyUI(
           max = 1e6,
           value = 1000
         ),
+        textInput(
+          'name_A',
+          'name A:',
+          value = 'control'
+        ),
+        textInput(
+          'name_B',
+          'name B:',
+          value = 'test'
+        ),
         actionButton(
           'button',
           'Calculate'
@@ -47,10 +59,10 @@ shinyUI(
           # ),
           tags$br(),
           tags$a(
-            href = 'https://github.com/Vidogreg/bayes-ab-testing/tree/master/bayes-conversion-test',
+            href = 'https://github.com/Vidogreg/bayes-ab-testing',
             'Get the code here'
           ),
-          tags$p('support: vgregor@pixelfederation.com')
+          tags$p('support: vidogreg@gmail.com')
         )
       ),
       mainPanel(

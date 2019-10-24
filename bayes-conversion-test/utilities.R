@@ -1,3 +1,4 @@
+# Bayesian AB test for conversion
 # Calculates the probability that B is better than A
 {
   # Arguments:
@@ -149,7 +150,8 @@ create_sample_beta_diff <- function(alpha_A, beta_A, alpha_B, beta_B, size = 1e5
 
 # Creates plotly chart of two posterior beta distributions
 plot_post_beta <- function(
-    alphaA, betaA, alphaB, betaB, hdiA, hdiB, xlim = c(0, 1), printPlot = TRUE, ...
+    alphaA, betaA, alphaB, betaB, hdiA, hdiB, xlim = c(0, 1),
+    nameA, nameB, printPlot = TRUE, ...
   ) {
   if(printPlot) {
     x <- seq(xlim[1], xlim[2], by = (xlim[2] - xlim[1])/1000)
@@ -164,10 +166,9 @@ plot_post_beta <- function(
       y = yA,
       type = 'scatter',
       mode = 'lines',
-      name = 'sample A',
+      name = nameA,
       line = list(color = '#5BC0DE'),
       hoverinfo = 'none'
-      # text = ~paste(sprintf('%.3g%%', x*100))
     ) %>% add_trace(
       x = xAreaA,
       y = yAreaA,
@@ -183,10 +184,9 @@ plot_post_beta <- function(
       y = yB,
       type = 'scatter',
       mode = 'lines',
-      name = 'sample B',
+      name = nameB,
       line = list(color = '#5CB85C'),
       hoverinfo = 'none'
-      # text = ~paste(sprintf('%.3g%%', x*100))
     ) %>% add_trace(
       x = xAreaB,
       y = yAreaB,
@@ -199,7 +199,7 @@ plot_post_beta <- function(
       showlegend = FALSE
     ) %>% layout(
       title = 'Distribution of conversions A and B',
-      titlefont = list(size = 14),
+      title = list(font = 14),
       xaxis = list(range = xlim, showgrid = FALSE, tickformat = '.1%', fixedrange = TRUE),
       yaxis = list(showline = FALSE, showticklabels = FALSE, showgrid = FALSE, fixedrange = TRUE),
       legend = list(x = 0.9, y = 0.9)
@@ -229,7 +229,6 @@ plot_sample_density <- function(
       name = 'conversion B - A',
       line = list(color = '#F27B0C'),
       hoverinfo = 'none',
-      # text = ~paste(sprintf('%.3g%%', x*100)),
       showlegend = FALSE
     ) %>% add_trace(
       x = xArea,
@@ -240,11 +239,10 @@ plot_sample_density <- function(
       fillcolor = 'rgba(242, 123, 12, 0.2)',
       line = list(color = '#F27B0C'),
       hoverinfo = 'none',
-      # text = ~paste(sprintf('%.3g%%', xArea*100)),
       showlegend = FALSE
     ) %>% layout(
       title = 'Approximate distribution of difference of conversions B - A',
-      titlefont = list(size = 14),
+      title = list(font = 14),
       xaxis = list(showgrid = FALSE, tickformat = '.1%', fixedrange = TRUE),
       yaxis = list(showline = FALSE, showticklabels = FALSE, showgrid = FALSE, fixedrange = TRUE),
       legend = list(x = 0.9, y = 0.9)
